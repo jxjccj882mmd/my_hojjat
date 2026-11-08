@@ -6,6 +6,9 @@ WORKDIR /build
 COPY backend/go.mod ./
 COPY backend/*.go ./
 
+# Generate go.sum and resolve dependencies (no go.sum is committed)
+RUN go mod tidy
+
 # Compile static, stripped binary
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o webapp .
 
